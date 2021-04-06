@@ -1,7 +1,7 @@
 {
   "name": "json-tools",
   "version": "1.0.0",
-  "description": "Database using JSON file as storage for Node.JS",
+  "description": "Database using JSON local object as storage for Node.JS",
   "main": "dist/JsonTools.js",
   "types": "dist/JsonTools.d.ts",
   "scripts": {

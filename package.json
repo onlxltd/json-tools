@@ -1,5 +1,5 @@
 {
-  "name": "json-tools",
+  "name": "node-json-tools",
   "version": "1.0.0",
   "description": "Database using JSON local object as storage for Node.JS",
   "main": "dist/JsonTools.js",

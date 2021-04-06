@@ -6,9 +6,6 @@ Add `json-tools` to your existing Node.js project.
 yarn add json-tools
 ```
 
-## Documentation
-[Auto Generated](https://belphemur.github.io/node-json-db)
-
 ## Inner Working
 
 ### Data

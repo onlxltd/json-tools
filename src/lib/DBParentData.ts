@@ -51,7 +51,7 @@ export class DBParentData {
      */
     public setData(toSet: any): void {
         if (this.parent === undefined) {
-            this.db.resetData(toSet)
+            this.tools.resetData(toSet)
             return
         }
 
@@ -74,7 +74,7 @@ export class DBParentData {
      */
     public delete(): void {
         if (this.parent === undefined) {
-            this.db.resetData({})
+            this.tools.resetData({})
             return
         }
         const arrayInfo = this.checkArray(true)

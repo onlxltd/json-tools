@@ -7,9 +7,9 @@
 > A simple "database" that use JSON file for Node.JS.
 
 ## Installation
-Add `node-json-db` to your existing Node.js project.
+Add `json-tools` to your existing Node.js project.
 ```bash
-yarn add node-json-db
+yarn add json-tools
 ```
 
 ## Documentation
@@ -37,19 +37,19 @@ To reach the value of data2 : **/test/data2**
 You can of course get also the full object **test** : **/test**
 Or even the root : **/**
 ## Usage
-See [test](https://github.com/Belphemur/node-json-db/tree/master/test) for more usage details.
+See [test](https://github.com/onlxltd/json-tools/tree/master/test) for more usage details.
 
 
 ```javascript
-import { JsonDB } from 'node-json-db';
-import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
+import { JsonTools } from 'json-tools';
+import { Config } from 'json-tools/dist/lib/JsonDBConfig'
 
 // The first argument is the database filename. If no extension, '.json' is assumed and automatically added.
 // The second argument is used to tell the DB to save after each push
 // If you put false, you'll have to call the save() method.
 // The third argument is to ask JsonDB to save the database in an human readable format. (default false)
 // The last argument is the separator. By default it's slash (/)
-var db = new JsonDB(new Config("myDataBase", true, false, '/'));
+var db = new JsonTools(new Config({}, true, '/'));
 
 // Pushing the data into the database
 // With the wanted DataPath
@@ -109,9 +109,6 @@ try {
 
 // Deleting data
 db.delete("/test1");
-
-// Save the data (useful if you disable the saveOnPush)
-db.save();
 
 // In case you have a exterior change to the databse file and want to reload it
 // use this method

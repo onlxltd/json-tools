@@ -16,7 +16,7 @@
     ]
   },
   "typedocOptions": {
-    "entryPoints": ["src/JsonDB.ts"],
+    "entryPoints": ["src/JsonTools.ts"],
     "out": "docs"
   },
   "include": [

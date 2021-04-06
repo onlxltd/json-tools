@@ -1,9 +1,9 @@
 {
-  "name": "node-json-db",
-  "version": "1.2.1",
+  "name": "json-tools",
+  "version": "1.0.0",
   "description": "Database using JSON file as storage for Node.JS",
-  "main": "dist/JsonDB.js",
-  "types": "dist/JsonDB.d.ts",
+  "main": "dist/JsonTools.js",
+  "types": "dist/JsonTools.d.ts",
   "scripts": {
     "test": "jest --coverage",
     "build": "tsc",
@@ -22,12 +22,12 @@
     "db",
     "typescript"
   ],
-  "author": "Antoine Aflalo <antoineaf+npm@admincmd.com>",
+  "author": "ON LX Limited <team+npm@onlx.ltd>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Belphemur/node-json-db/issues"
+    "url": "https://github.com/onlxltd/json-tools/issues"
   },
-  "homepage": "https://github.com/Belphemur/node-json-db",
+  "homepage": "https://github.com/onlxltd/json-tools",
   "dependencies": {
     "mkdirp": "~1.0.4"
   },

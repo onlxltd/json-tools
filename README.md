@@ -1,9 +1,9 @@
 > A simple "database" that use JSON file for Node.JS.
 
 ## Installation
-Add `json-tools` to your existing Node.js project.
+Add `node-json-tools` to your existing Node.js project.
 ```bash
-yarn add json-tools
+yarn add node-json-tools
 ```
 
 ## Inner Working
@@ -28,12 +28,12 @@ To reach the value of data2 : **/test/data2**
 You can of course get also the full object **test** : **/test**
 Or even the root : **/**
 ## Usage
-See [test](https://github.com/onlxltd/json-tools/tree/master/test) for more usage details.
+See [test](https://github.com/onlxltd/node-json-tools/tree/master/test) for more usage details.
 
 
 ```javascript
-import { JsonTools } from 'json-tools';
-import { Config } from 'json-tools/dist/lib/JsonDBConfig'
+import { JsonTools } from 'node-json-tools';
+import { Config } from 'node-json-tools/dist/lib/JsonDBConfig'
 
 // The first argument is the database filename. If no extension, '.json' is assumed and automatically added.
 // The second argument is used to tell the DB to save after each push

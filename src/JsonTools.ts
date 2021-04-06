@@ -1,44 +1,42 @@
-import {KeyValue, merge, removeTrailingChar} from "./lib/Utils"
-import * as FS from 'fs'
-import * as path from "path"
-import * as mkdirp from "mkdirp"
-import {DatabaseError, DataError} from "./lib/Errors"
-import {DBParentData} from "./lib/DBParentData"
-import {ArrayInfo} from "./lib/ArrayInfo"
-import { Config, JsonDBConfig } from "./lib/JsonDBConfig"
+import { KeyValue, merge, removeTrailingChar }  from "./lib/Utils"
+import * as FS                                  from 'fs'
+import * as path                                from "path"
+import * as mkdirp                              from "mkdirp"
+import { DatabaseError, DataError }             from "./lib/Errors"
+import { DBParentData }                         from "./lib/DBParentData"
+import { ArrayInfo }                            from "./lib/ArrayInfo"
+import { Config, JsonToolsConfig }              from "./lib/JsonToolsConfig"
+import { EventEmitter }                         from "events"
 
 type DataPath = Array<string>
 
 
 export type FindCallback = (entry: any, index: number | string) => boolean
 
-export class JsonDB {
+export class JsonTools extends EventEmitter {
     private loaded: boolean = false
     private data: KeyValue = {}
-    private readonly config : JsonDBConfig
+    private readonly config : JsonToolsConfig
 
 
   /**
    * JSONDB Constructor
-   * @param filename where to save the "DB". Can also be used to give the whole configuration
+   * @param data where to save the "DB". Can also be used to give the whole configuration
    * @param saveOnPush save the database at each push command into the json file
    * @param humanReadable the JSON file will be readable easily by a human
    * @param separator what to use as separator
    */
-    constructor(filename: string | Config, saveOnPush: boolean = true, humanReadable: boolean = false, separator: string = '/') {
+    constructor(data: KeyValue | Config, emitOnPush: boolean = true, separator: string = '/') {
+        super()
 
-        if(filename instanceof Config) {
-          this.config = filename
+        if(data instanceof Config) {
+          this.config = data
         } else {
-          this.config = new Config(filename, saveOnPush, humanReadable, separator)
+          this.config = new Config(data, emitOnPush, separator)
         }
 
-        if (!FS.existsSync(this.config.filename)) {
-            const dirname = path.dirname(this.config.filename)
-            mkdirp.sync(dirname)
-            this.save(true)
-            this.loaded = true
-        }
+        this.data = this.config.data
+        this.loaded = true
     }
 
     /**
@@ -59,14 +57,12 @@ export class JsonDB {
     }
 
     private retrieveData(dataPath: DataPath, create: boolean = false) {
-        this.load()
 
         const thisDb = this
 
         const recursiveProcessDataPath = (data: any, index: number): any => {
 
             let property = dataPath[index]
-
 
             /**
              * Find the wanted Data or create it.
@@ -276,8 +272,8 @@ export class JsonDB {
         }
         dbData.setData(toSet)
 
-        if (this.config.saveOnPush) {
-            this.save()
+        if (this.config.emitOnPush) {
+            this.emitChanges()
         }
     }
 
@@ -292,8 +288,8 @@ export class JsonDB {
         }
         dbData.delete()
 
-        if (this.config.saveOnPush) {
-            this.save()
+        if (this.config.emitOnPush) {
+            this.emitChanges()
         }
     }
 
@@ -307,53 +303,10 @@ export class JsonDB {
     }
 
     /**
-     * Reload the database from the file
+     * Emit message 
      */
-    public reload(): void {
-        this.loaded = false
-        this.load()
-    };
-
-    /**
-     * Manually load the database
-     * It is automatically called when the first getData is done
-     */
-    public load(): void {
-        if (this.loaded) {
-            return
-        }
-        try {
-            const data = FS.readFileSync(this.config.filename, 'utf8')
-            this.data = JSON.parse(data)
-            this.loaded = true
-        } catch (err) {
-            const error = new DatabaseError("Can't Load Database", 1, err)
-            throw error
-        }
+    public emitChanges() {
+        this.emit('changed')
     }
 
-    /**
-     * Manually save the database
-     * By default you can't save the database if it's not loaded
-     * @param force force the save of the database
-     */
-    public save(force?: boolean): void {
-        force = force || false
-        if (!force && !this.loaded) {
-            throw new DatabaseError("DataBase not loaded. Can't write", 7)
-        }
-        let data = ""
-        try {
-            if (this.config.humanReadable) {
-                data = JSON.stringify(this.data, null, 4)
-            }
-            else {
-                data = JSON.stringify(this.data)
-            }
-            FS.writeFileSync(this.config.filename, data, 'utf8')
-        } catch (err) {
-            const error = new DatabaseError("Can't save the database", 2, err)
-            throw error
-        }
-    }
 }

@@ -1,19 +1,19 @@
-import {ArrayInfo} from "./ArrayInfo"
-import {DataError} from "./Errors"
-import {KeyValue} from "./Utils"
-import {JsonDB} from "../JsonDB"
+import { ArrayInfo }  from "./ArrayInfo"
+import { DataError }  from "./Errors"
+import { KeyValue }   from "./Utils"
+import { JsonTools }  from "../JsonTools"
 
 export class DBParentData {
     readonly parent?: string
     readonly data: KeyValue
-    readonly db: JsonDB
+    readonly tools: JsonTools
     readonly dataPath: string
 
 
-    constructor(data: any, db: JsonDB, dataPath: string, parent?: string) {
+    constructor(data: any, tools: JsonTools, dataPath: string, parent?: string) {
         this.parent = parent
         this.data = data
-        this.db = db
+        this.tools = tools
         this.dataPath = dataPath
     }
 
